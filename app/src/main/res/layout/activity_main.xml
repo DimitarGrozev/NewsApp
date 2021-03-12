@@ -16,7 +16,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NEWS"
+        android:text="НОВИНИ"
         android:gravity="center"
         android:layout_weight="10"
         android:fontFamily="@font/g_bold"
@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Search"
+            android:hint="Търсене"
             android:fontFamily="@font/g_bold"
             android:textColor="@color/grey"
             android:textColorHint="@color/grey"
