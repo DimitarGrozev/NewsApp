@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
         etQuery = findViewById(R.id.etQuery);
         btnSearch = findViewById(R.id.btnSearch);
-        btnAboutUs = findViewById(R.id.aboutUs);
         dialog = new Dialog(MainActivity.this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
