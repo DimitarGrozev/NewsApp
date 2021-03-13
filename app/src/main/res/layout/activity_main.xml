@@ -17,14 +17,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="10"
-            android:background="@color/white"
+
+            android:background="@drawable/border"
             android:fontFamily="@font/g_bold"
             android:gravity="center"
+            android:letterSpacing="0.05"
             android:padding="10dp"
             android:text="НОВИНИ"
-            android:letterSpacing="0.25"
             android:textColor="@color/black"
-            android:textSize="22sp" />
+            android:textSize="28sp" />
     </LinearLayout>
 
 
@@ -56,7 +57,7 @@
 
         <Button
             android:id="@+id/btnSearch"
-            android:layout_width="wrap_content"
+            android:layout_width="76dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
@@ -64,19 +65,19 @@
     </GridLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/swipeRefresh">
+        android:background="@drawable/bordertop"
+        >
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:id="@+id/recyclerView"/>
+            android:layout_marginTop="10dp" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
 
 
 </LinearLayout>
