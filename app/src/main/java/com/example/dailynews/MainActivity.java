@@ -115,9 +115,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String getCountry(){
-        Locale locale = Locale.getDefault();
+        Locale locale = new Locale("Cyril", "bg");
         String country = locale.getCountry();
-        return country.toLowerCase();
+        return country;
     }
 }
 
