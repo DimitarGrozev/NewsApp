@@ -3,14 +3,15 @@
     package="com.example.dailynews">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/circle_logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DailyNews">
+        android:theme="@style/Theme.DailyNews"
+        android:usesCleartextTraffic="true">
+
         <activity android:name=".SplashScreen">
 
             <intent-filter>
