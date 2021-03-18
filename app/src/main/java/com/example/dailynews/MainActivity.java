@@ -11,23 +11,22 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.example.dailynews.Model.Articles;
 import com.example.dailynews.Model.Headlines;
 import com.example.dailynews.Model.Suggestion;
-import com.example.dailynews.Model.Suggestions;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,12 +37,16 @@ public class MainActivity extends AppCompatActivity {
     };
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
+    TextView txtHeader;
     EditText etQuery;
-    Button btnSearch, btnAboutUs;
+    Button btnSearch;
     Dialog dialog;
     final String API_KEY = "fe7096fa41e84cd2b410230482fea758";
     Adapter adapter;
     List<Articles> articles = new ArrayList<>();
+    int selectedCountry = 0;
+    ArrayList<String> countryList = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +56,19 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout = findViewById(R.id.swipeRefresh);
         recyclerView = findViewById(R.id.recyclerView);
 
+        txtHeader = (TextView)findViewById(R.id.txtHeader);
         etQuery = findViewById(R.id.etQuery);
         btnSearch = findViewById(R.id.btnSearch);
         dialog = new Dialog(MainActivity.this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        final String country = getCountry();
 
-        retrieveJson("", country, API_KEY);
+        countryList.add("bg");
+        countryList.add("gb");
+        countryList.add("de");
+        countryList.add("fr");
+        countryList.add("ru");
+        retrieveJson("", countryList.get(selectedCountry), API_KEY);
 
         AutoCompleteTextView editText = findViewById(R.id.etQuery);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -69,10 +77,33 @@ public class MainActivity extends AppCompatActivity {
         editText.setAdapter(adapter);
         editText.setThreshold(1);
 
+        Spinner languageSpinner = (Spinner) findViewById(R.id.spinnerLanguage);
+        ArrayAdapter<String> languageAdapter = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.languages));
+        languageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        languageSpinner.setAdapter(languageAdapter);
+        languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String country = parent.getItemAtPosition(position).toString().toLowerCase();
+                SelectLanguage(country);
+                retrieveJson("", countryList.get(selectedCountry), API_KEY);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
+
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                retrieveJson("", country, API_KEY);
+                retrieveJson("", countryList.get(selectedCountry), API_KEY);
             }
         });
 
@@ -135,22 +166,24 @@ public class MainActivity extends AppCompatActivity {
                     swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                         @Override
                         public void onRefresh() {
-                            retrieveJson(etQuery.getText().toString(), country, API_KEY);
+                            retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY);
                         }
                     });
-                    retrieveJson(etQuery.getText().toString(), country, API_KEY);
+                    retrieveJson(etQuery.getText().toString(), countryList.get(selectedCountry), API_KEY);
                 } else {
                     swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                         @Override
                         public void onRefresh() {
-                            retrieveJson("", country, API_KEY);
+                            retrieveJson("", countryList.get(selectedCountry), API_KEY);
                         }
                     });
-                    retrieveJson("", country, API_KEY);
+                    retrieveJson("", countryList.get(selectedCountry), API_KEY);
                 }
             }
         });
     }
+
+
 
     public void retrieveJson(String query, String country, String apiKey) {
         swipeRefreshLayout.setRefreshing(true);
@@ -181,10 +214,39 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public String getCountry() {
-        Locale locale = new Locale("Cyril", "bg");
-        String country = locale.getCountry();
-        return country;
+    public void SelectLanguage(String country){
+        switch(country){
+            case "bg":
+                txtHeader.setText("НОВИНИ");
+                etQuery.setHint("Търсене");
+                etQuery.setText("");
+                selectedCountry = 0;
+                break;
+            case "gb":
+                txtHeader.setText("NEWS");
+                etQuery.setHint("Search");
+                etQuery.setText("");
+                selectedCountry = 1;
+                break;
+            case "de":
+                txtHeader.setText("NACHRICHTEN");
+                etQuery.setHint("Suche");
+                etQuery.setText("");
+                selectedCountry = 2;
+                break;
+            case "fr":
+                txtHeader.setText("NOUVELLES");
+                etQuery.setHint("Chercher");
+                etQuery.setText("");
+                selectedCountry = 3;
+                break;
+            case "ru":
+                txtHeader.setText("НОВОСТИ");
+                etQuery.setHint("Поиск");
+                etQuery.setText("");
+                selectedCountry = 4;
+                break;
+        }
     }
 }
 
