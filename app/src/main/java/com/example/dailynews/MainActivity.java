@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     TextView txtHeader;
     EditText etQuery;
-    Button btnSearch;
+    Button btnSearch, btnBusiness, btnSport, btnFashion, btnAutomobiles, btnTechnology, btnHealth;
     Dialog dialog;
     final String API_KEY = "fe7096fa41e84cd2b410230482fea758";
     Adapter adapter;
@@ -59,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
         txtHeader = (TextView)findViewById(R.id.txtHeader);
         etQuery = findViewById(R.id.etQuery);
         btnSearch = findViewById(R.id.btnSearch);
+        btnBusiness = findViewById(R.id.btnBusiness);
+        btnSport = findViewById(R.id.btnSport);
+        btnHealth = findViewById(R.id.btnHealth);
+        btnTechnology = findViewById(R.id.btnTechnology);
+        btnAutomobiles = findViewById(R.id.btnAutomobiles);
+        btnFashion = findViewById(R.id.btnFashion);
         dialog = new Dialog(MainActivity.this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -181,6 +187,54 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnBusiness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etQuery.setText(btnBusiness.getText().toString());
+                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY);
+            }
+        });
+
+        btnSport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etQuery.setText(btnSport.getText().toString());
+                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY);
+            }
+        });
+
+        btnHealth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etQuery.setText(btnHealth.getText().toString());
+                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY);
+            }
+        });
+
+        btnTechnology.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etQuery.setText(btnTechnology.getText().toString());
+                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY);
+            }
+        });
+
+        btnFashion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etQuery.setText(btnFashion.getText().toString());
+                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY);
+            }
+        });
+
+        btnAutomobiles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etQuery.setText(btnAutomobiles.getText().toString());
+                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY);
+            }
+        });
     }
 
 
@@ -220,30 +274,60 @@ public class MainActivity extends AppCompatActivity {
                 txtHeader.setText("НОВИНИ");
                 etQuery.setHint("Търсене");
                 etQuery.setText("");
+                btnBusiness.setText("Бизнес");
+                btnSport.setText("Спорт");
+                btnHealth.setText("Здраве");
+                btnTechnology.setText("Технологии");
+                btnFashion.setText("Мода");
+                btnAutomobiles.setText("Авто");
                 selectedCountry = 0;
                 break;
             case "gb":
                 txtHeader.setText("NEWS");
                 etQuery.setHint("Search");
                 etQuery.setText("");
+                btnBusiness.setText("Business");
+                btnSport.setText("Sport");
+                btnHealth.setText("Health");
+                btnTechnology.setText("Technology");
+                btnFashion.setText("Fashion");
+                btnAutomobiles.setText("Auto");
                 selectedCountry = 1;
                 break;
             case "de":
                 txtHeader.setText("NACHRICHTEN");
                 etQuery.setHint("Suche");
                 etQuery.setText("");
+                btnBusiness.setText("Geschäft");
+                btnSport.setText("Sport");
+                btnHealth.setText("Gesundheit");
+                btnTechnology.setText("Technologie");
+                btnFashion.setText("Mode");
+                btnAutomobiles.setText("Auto");
                 selectedCountry = 2;
                 break;
             case "fr":
                 txtHeader.setText("NOUVELLES");
                 etQuery.setHint("Chercher");
                 etQuery.setText("");
+                btnBusiness.setText("Entreprise");
+                btnSport.setText("Sport");
+                btnHealth.setText("Santé");
+                btnTechnology.setText("La technologie");
+                btnFashion.setText("Mode");
+                btnAutomobiles.setText("Auto");
                 selectedCountry = 3;
                 break;
             case "ru":
                 txtHeader.setText("НОВОСТИ");
                 etQuery.setHint("Поиск");
                 etQuery.setText("");
+                btnBusiness.setText("Бизнес");
+                btnSport.setText("Спорт");
+                btnHealth.setText("Здоровье");
+                btnTechnology.setText("Технологии");
+                btnFashion.setText("Мода");
+                btnAutomobiles.setText("Авто");
                 selectedCountry = 4;
                 break;
         }
