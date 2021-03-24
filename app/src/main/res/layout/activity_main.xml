@@ -134,25 +134,25 @@
                 android:background="@drawable/category_button" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnFashion"
+                android:id="@+id/btnEntertainment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
-                android:text="Мода"
+                android:text="Забавление"
                 android:fontFamily="@font/g_bold"
                 android:background="@drawable/category_button" />
 
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnAutomobiles"
+                android:id="@+id/btnScience"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
-                android:text="Авто"
+                android:text="Наука"
                 android:fontFamily="@font/g_bold"
                 android:background="@drawable/category_button" />
         </GridLayout>

@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     TextView txtHeader;
     EditText etQuery;
-    Button btnSearch, btnBusiness, btnSport, btnFashion, btnAutomobiles, btnTechnology, btnHealth;
+    Button btnSearch, btnBusiness, btnSport, btnEntertainment, btnScience, btnTechnology, btnHealth;
     Dialog dialog;
     final String API_KEY = "fe7096fa41e84cd2b410230482fea758";
     Adapter adapter;
@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         btnSport = findViewById(R.id.btnSport);
         btnHealth = findViewById(R.id.btnHealth);
         btnTechnology = findViewById(R.id.btnTechnology);
-        btnAutomobiles = findViewById(R.id.btnAutomobiles);
-        btnFashion = findViewById(R.id.btnFashion);
+        btnEntertainment = findViewById(R.id.btnEntertainment);
+        btnScience = findViewById(R.id.btnScience);
         dialog = new Dialog(MainActivity.this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         countryList.add("de");
         countryList.add("fr");
         countryList.add("ru");
-        retrieveJson("", countryList.get(selectedCountry), API_KEY);
+        retrieveJson("", countryList.get(selectedCountry), API_KEY,"");
 
         AutoCompleteTextView editText = findViewById(R.id.etQuery);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String country = parent.getItemAtPosition(position).toString().toLowerCase();
                 SelectLanguage(country);
-                retrieveJson("", countryList.get(selectedCountry), API_KEY);
+                retrieveJson("", countryList.get(selectedCountry), API_KEY,"");
             }
 
             @Override
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                retrieveJson("", countryList.get(selectedCountry), API_KEY);
+                retrieveJson("", countryList.get(selectedCountry), API_KEY,"");
             }
         });
 
@@ -172,18 +172,18 @@ public class MainActivity extends AppCompatActivity {
                     swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                         @Override
                         public void onRefresh() {
-                            retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY);
+                            retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY,"");
                         }
                     });
-                    retrieveJson(etQuery.getText().toString(), countryList.get(selectedCountry), API_KEY);
+                    retrieveJson(etQuery.getText().toString(), countryList.get(selectedCountry), API_KEY,"");
                 } else {
                     swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                         @Override
                         public void onRefresh() {
-                            retrieveJson("", countryList.get(selectedCountry), API_KEY);
+                            retrieveJson("", countryList.get(selectedCountry), API_KEY,"");
                         }
                     });
-                    retrieveJson("", countryList.get(selectedCountry), API_KEY);
+                    retrieveJson("", countryList.get(selectedCountry), API_KEY,"");
                 }
             }
         });
@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 etQuery.setText(btnBusiness.getText().toString());
-                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY);
+                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY, "business");
             }
         });
 
@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 etQuery.setText(btnSport.getText().toString());
-                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY);
+                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY,"sport");
             }
         });
 
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 etQuery.setText(btnHealth.getText().toString());
-                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY);
+                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY,"health");
             }
         });
 
@@ -216,36 +216,39 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 etQuery.setText(btnTechnology.getText().toString());
-                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY);
+                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY,"technology");
             }
         });
 
-        btnFashion.setOnClickListener(new View.OnClickListener() {
+        btnEntertainment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                etQuery.setText(btnFashion.getText().toString());
-                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY);
+                etQuery.setText(btnEntertainment.getText().toString());
+                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY,"entertainment");
             }
         });
 
-        btnAutomobiles.setOnClickListener(new View.OnClickListener() {
+        btnScience.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                etQuery.setText(btnAutomobiles.getText().toString());
-                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY);
+                etQuery.setText(btnScience.getText().toString());
+                retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY,"science");
             }
         });
     }
 
 
 
-    public void retrieveJson(String query, String country, String apiKey) {
+    public void retrieveJson(String query, String country, String apiKey, String category) {
         swipeRefreshLayout.setRefreshing(true);
         Call<Headlines> call;
-        if (!etQuery.getText().toString().equals("")) {
-            call = ApiClient.getInstance().getApi().getSpecificData(query, apiKey);
+        if(!category.equals("")){
+            call =  ApiClient.getInstance().getApi().getCategory(country, category, apiKey);
+        }
+        else if (!etQuery.getText().toString().equals("")) {
+            call = ApiClient.getInstance().getApi().getSpecificData(query, country, apiKey);
         } else {
-            call = ApiClient.getInstance().getApi().getHeadlines(country, apiKey);
+            call = ApiClient.getInstance().getApi().getHeadlines(country, apiKey, 50);
         }
 
         call.enqueue(new Callback<Headlines>() {
@@ -278,8 +281,8 @@ public class MainActivity extends AppCompatActivity {
                 btnSport.setText("Спорт");
                 btnHealth.setText("Здраве");
                 btnTechnology.setText("Технологии");
-                btnFashion.setText("Мода");
-                btnAutomobiles.setText("Авто");
+                btnEntertainment.setText("Развлекателни");
+                btnScience.setText("Наука");
                 selectedCountry = 0;
                 break;
             case "gb":
@@ -290,8 +293,8 @@ public class MainActivity extends AppCompatActivity {
                 btnSport.setText("Sport");
                 btnHealth.setText("Health");
                 btnTechnology.setText("Technology");
-                btnFashion.setText("Fashion");
-                btnAutomobiles.setText("Auto");
+                btnEntertainment.setText("Entertainment");
+                btnScience.setText("Science");
                 selectedCountry = 1;
                 break;
             case "de":
@@ -302,8 +305,8 @@ public class MainActivity extends AppCompatActivity {
                 btnSport.setText("Sport");
                 btnHealth.setText("Gesundheit");
                 btnTechnology.setText("Technologie");
-                btnFashion.setText("Mode");
-                btnAutomobiles.setText("Auto");
+                btnEntertainment.setText("Unterhaltung");
+                btnScience.setText("Wissenschaft");
                 selectedCountry = 2;
                 break;
             case "fr":
@@ -314,8 +317,8 @@ public class MainActivity extends AppCompatActivity {
                 btnSport.setText("Sport");
                 btnHealth.setText("Santé");
                 btnTechnology.setText("La technologie");
-                btnFashion.setText("Mode");
-                btnAutomobiles.setText("Auto");
+                btnEntertainment.setText("Divertissement");
+                btnScience.setText("Science");
                 selectedCountry = 3;
                 break;
             case "ru":
@@ -326,8 +329,8 @@ public class MainActivity extends AppCompatActivity {
                 btnSport.setText("Спорт");
                 btnHealth.setText("Здоровье");
                 btnTechnology.setText("Технологии");
-                btnFashion.setText("Мода");
-                btnAutomobiles.setText("Авто");
+                btnEntertainment.setText("Развлечения");
+                btnScience.setText("Наука");
                 selectedCountry = 4;
                 break;
         }
