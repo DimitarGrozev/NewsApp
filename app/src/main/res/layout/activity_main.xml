@@ -11,8 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/txtHeader"
@@ -36,7 +35,6 @@
             android:layout_alignParentRight="true"
             android:backgroundTint="@color/colorPrimaryDark" />
     </RelativeLayout>
-
 
     <GridLayout
         android:layout_width="match_parent"
@@ -79,7 +77,86 @@
              />
     </GridLayout>
 
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:scrollbars="none">
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_marginBottom="5dp"
+            android:rowCount="2">
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBusiness"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="Бизнес"
+                android:fontFamily="@font/g_bold"
+                android:background="@drawable/category_button" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnHealth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="Здраве"
+                android:fontFamily="@font/g_bold"
+                android:background="@drawable/category_button"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="Спорт"
+                android:fontFamily="@font/g_bold"
+                android:background="@drawable/category_button" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnTechnology"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="Технологии"
+                android:fontFamily="@font/g_bold"
+                android:background="@drawable/category_button" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnEntertainment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="Забавление"
+                android:fontFamily="@font/g_bold"
+                android:background="@drawable/category_button" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnScience"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="Наука"
+                android:fontFamily="@font/g_bold"
+                android:background="@drawable/category_button" />
+        </GridLayout>
+    </HorizontalScrollView>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
@@ -95,6 +172,4 @@
             android:layout_marginTop="10dp" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
 </LinearLayout>
