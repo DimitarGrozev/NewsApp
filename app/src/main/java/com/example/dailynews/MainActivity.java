@@ -2,11 +2,19 @@ package com.example.dailynews;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,6 +35,7 @@ import com.example.dailynews.Model.Suggestion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,15 +52,21 @@ public class MainActivity extends AppCompatActivity {
     Dialog dialog;
     final String API_KEY = "fe7096fa41e84cd2b410230482fea758";
     Adapter adapter;
+    public static boolean flag = true;
     List<Articles> articles = new ArrayList<>();
-    int selectedCountry = 0;
+    static int selectedCountry = 0;
     ArrayList<String> countryList = new ArrayList<String>();
-
-
+    NotificationGenerator generator = new NotificationGenerator();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AlarmHandler alarmHandler = new AlarmHandler(this);
+        alarmHandler.cancelAlarmManager();
+        alarmHandler.setAlarmManager();
 
         swipeRefreshLayout = findViewById(R.id.swipeRefresh);
         recyclerView = findViewById(R.id.recyclerView);
@@ -69,6 +84,12 @@ public class MainActivity extends AppCompatActivity {
         countryList.add("fr");
         countryList.add("ru");
         retrieveJson("", countryList.get(selectedCountry), API_KEY);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
 
         AutoCompleteTextView editText = findViewById(R.id.etQuery);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -97,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -181,6 +201,141 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+          //  generator.StartThread();
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null)
+            {
+                //Cry about not being clicked on
+            } else {
+                generator.StopThread();
+            if (extras.getBoolean("00")) {
+                    //  selectedCountry = 0;
+                    languageSpinner.setSelection(0);
+                    retrieveJson("", "bg", API_KEY);
+                } else if (extras.getBoolean("01")) {
+                    //  selectedCountry = 0;
+                    languageSpinner.setSelection(0);
+                    retrieveJson("", "bg", API_KEY);
+                } else if (extras.getBoolean("02")) {
+                    // selectedCountry = 0;
+                    languageSpinner.setSelection(0);
+                    retrieveJson("", "bg", API_KEY);
+                } else if (extras.getBoolean("03")) {
+                    // selectedCountry = 0;
+                    languageSpinner.setSelection(0);
+                    retrieveJson("", "bg", API_KEY);
+                } else if (extras.getBoolean("04")) {
+                    // selectedCountry = 0;
+                    languageSpinner.setSelection(0);
+                    retrieveJson("", "bg", API_KEY);
+                } else if (extras.getBoolean("05")) {
+                    // selectedCountry = 0;
+                    languageSpinner.setSelection(0);
+                    retrieveJson("", "bg", API_KEY);
+                } else if (extras.getBoolean("10")) {
+                    // selectedCountry = 1;
+                    languageSpinner.setSelection(1);
+                    retrieveJson("", "gb", API_KEY);
+                } else if (extras.getBoolean("11")) {
+                    //  selectedCountry = 1;
+                    languageSpinner.setSelection(1);
+                    retrieveJson("", "gb", API_KEY);
+                } else if (extras.getBoolean("12")) {
+                    //  selectedCountry = 1;
+                    languageSpinner.setSelection(1);
+                    retrieveJson("", "gb", API_KEY);
+                } else if (extras.getBoolean("13")) {
+                    // selectedCountry = 1;
+                    languageSpinner.setSelection(1);
+                    retrieveJson("", "gb", API_KEY);
+                } else if (extras.getBoolean("14")) {
+                    // selectedCountry = 1;
+                    languageSpinner.setSelection(1);
+                    retrieveJson("", "gb", API_KEY);
+                } else if (extras.getBoolean("15")) {
+                    // selectedCountry = 1;
+                    languageSpinner.setSelection(1);
+                    retrieveJson("", "gb", API_KEY);
+                } else if (extras.getBoolean("20")) {
+                    // selectedCountry = 2;
+                    languageSpinner.setSelection(2);
+                    retrieveJson("", "de", API_KEY);
+                } else if (extras.getBoolean("21")) {
+                    // selectedCountry = 2;
+                    languageSpinner.setSelection(2);
+                    retrieveJson("", "de", API_KEY);
+                } else if (extras.getBoolean("22")) {
+                    // selectedCountry = 2;
+                    languageSpinner.setSelection(2);
+                    retrieveJson("", "de", API_KEY);
+                } else if (extras.getBoolean("23")) {
+                    //  selectedCountry = 2;
+                    languageSpinner.setSelection(2);
+                    retrieveJson("", "de", API_KEY);
+                } else if (extras.getBoolean("24")) {
+                    //  selectedCountry = 2;
+                    languageSpinner.setSelection(2);
+                    retrieveJson("", "de", API_KEY);
+                } else if (extras.getBoolean("25")) {
+                    //  selectedCountry = 2;
+                    languageSpinner.setSelection(2);
+                    retrieveJson("", "de", API_KEY);
+                } else if (extras.getBoolean("30")) {
+                    // selectedCountry = 3;
+                    languageSpinner.setSelection(3);
+                    retrieveJson("", "fr", API_KEY);
+                } else if (extras.getBoolean("31")) {
+                    //  selectedCountry = 3;
+                    languageSpinner.setSelection(3);
+                    retrieveJson("", "fr", API_KEY);
+                } else if (extras.getBoolean("32")) {
+                    //  selectedCountry = 3;
+                    languageSpinner.setSelection(3);
+                    retrieveJson("", "fr", API_KEY);
+                } else if (extras.getBoolean("33")) {
+                    //  selectedCountry = 3;
+                    languageSpinner.setSelection(3);
+                    retrieveJson("", "fr", API_KEY);
+                } else if (extras.getBoolean("34")) {
+                    //  selectedCountry = 3;
+                    languageSpinner.setSelection(3);
+                    retrieveJson("", "fr", API_KEY);
+                } else if (extras.getBoolean("35")) {
+                    //  selectedCountry = 3;
+                    languageSpinner.setSelection(3);
+                    retrieveJson("", "fr", API_KEY);
+                } else if (extras.getBoolean("40")) {
+                    // selectedCountry = 4;
+                    languageSpinner.setSelection(4);
+                    retrieveJson("", "ru", API_KEY);
+                } else if (extras.getBoolean("41")) {
+                    //  selectedCountry = 4;
+                    languageSpinner.setSelection(4);
+                    retrieveJson("", "ru", API_KEY);
+                } else if (extras.getBoolean("42")) {
+                    //  selectedCountry =4;
+                    languageSpinner.setSelection(4);
+                    retrieveJson("", "ru", API_KEY);
+                } else if (extras.getBoolean("43")) {
+                    //  selectedCountry = 4;
+                    languageSpinner.setSelection(4);
+                    retrieveJson("", "ru", API_KEY);
+                } else if (extras.getBoolean("44")) {
+                    //  selectedCountry = 4;
+                    languageSpinner.setSelection(4);
+                    retrieveJson("", "ru", API_KEY);
+                } else if (extras.getBoolean("45")) {
+                    // selectedCountry = 4;
+                    languageSpinner.setSelection(4);
+                    retrieveJson("", "ru", API_KEY);
+                }
+                generator.StopThread();
+            }
+
+        }
+
     }
 
 
@@ -221,32 +376,82 @@ public class MainActivity extends AppCompatActivity {
                 etQuery.setHint("Търсене");
                 etQuery.setText("");
                 selectedCountry = 0;
+
                 break;
             case "gb":
                 txtHeader.setText("NEWS");
                 etQuery.setHint("Search");
                 etQuery.setText("");
                 selectedCountry = 1;
+
                 break;
             case "de":
                 txtHeader.setText("NACHRICHTEN");
                 etQuery.setHint("Suche");
                 etQuery.setText("");
                 selectedCountry = 2;
+
                 break;
             case "fr":
                 txtHeader.setText("NOUVELLES");
                 etQuery.setHint("Chercher");
                 etQuery.setText("");
                 selectedCountry = 3;
+
                 break;
             case "ru":
                 txtHeader.setText("НОВОСТИ");
                 etQuery.setHint("Поиск");
                 etQuery.setText("");
                 selectedCountry = 4;
+
                 break;
         }
     }
+    class NotificationGenerator{
+        private volatile boolean stopThread = false;
+        NotificationRunnable runnable = new NotificationRunnable();
+        Thread th1 = new Thread(runnable);
+        public void StartThread(){
+
+            th1.start();
+
+        }
+        public void StopThread(){
+            th1.interrupt();
+        }
+
+
+
+        class NotificationRunnable implements Runnable {
+
+            @Override
+            public void run() {
+              while(stopThread==false) {
+                    try {
+                        Thread.sleep(15000);
+                        if (stopThread == false) {
+                            CreateNotification();
+                            MainActivity.flag = false;
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+               }
+
+            }
+        }
+        private void CreateNotification(){
+
+
+
+
+
+
+
+        }
+    }
+
 }
 
