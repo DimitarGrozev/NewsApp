@@ -11,20 +11,23 @@ public class AlarmHandler {
     public AlarmHandler(Context context) {
         this.context = context;
     }
-    public void setAlarmManager(){
-    Intent intent = new Intent(context, ExecutableService.class);
-        PendingIntent sender =PendingIntent.getBroadcast(context , 2,intent,0);
+
+    public void setAlarmManager() {
+        Intent intent = new Intent(context, ExecutableService.class);
+        PendingIntent sender = PendingIntent.getBroadcast(context, 2, intent, 0);
         AlarmManager noti = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        if(noti!=null) {
+        if (noti != null) {
             long TriggerAfter = 10000;
             long TriggerEvery = 10000;
             noti.setRepeating(AlarmManager.RTC_WAKEUP, TriggerAfter, TriggerEvery, sender);
         }
     }
-    /*public void cancelAlarmManager(){
+
+    public void cancelAlarmManager() {
         Intent intent = new Intent(context, ExecutableService.class);
-        PendingIntent sender =PendingIntent.getBroadcast(context , 2,intent,0);
+        PendingIntent sender = PendingIntent.getBroadcast(context, 2, intent, 0);
         AlarmManager noti = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         noti.cancel(sender);
-    }*/
+
+    }
 }

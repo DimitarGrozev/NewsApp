@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private String[] Suggestions = new String[]{
     };
     RecyclerView recyclerView;
-    //SwipeRefreshLayout swipeRefreshLayout;
+    SwipeRefreshLayout swipeRefreshLayout;
     TextView txtHeader;
     EditText etQuery;
     Button btnSearch, btnBusiness, btnSport, btnEntertainment, btnScience, btnTechnology, btnHealth;
@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
     List<Articles> articles = new ArrayList<>();
     static int selectedCountry = 0;
     ArrayList<String> countryList = new ArrayList<String>();
-    //NotificationGenerator generator = new NotificationGenerator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         AlarmHandler alarmHandler = new AlarmHandler(this);
-        //alarmHandler.cancelAlarmManager();
+        alarmHandler.cancelAlarmManager();
         alarmHandler.setAlarmManager();
 
-        //swipeRefreshLayout = findViewById(R.id.swipeRefresh);
+       // swipeRefreshLayout = findViewById(R.id.swipeRefresh);
         recyclerView = findViewById(R.id.recyclerView);
 
         txtHeader = (TextView) findViewById(R.id.txtHeader);
@@ -119,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-              //  ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
+               ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
                 String country = parent.getItemAtPosition(position).toString().toLowerCase();
 
                 if(!country.equals(chosenNotif)) {
@@ -139,12 +138,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        /*swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                retrieveJson("", countryList.get(selectedCountry), API_KEY,"");
             }
-        });*/
+        });
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -190,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<List<Suggestion>> call, Throwable t) {
-                            // swipeRefreshLayout.setRefreshing(false);
+                             swipeRefreshLayout.setRefreshing(false);
                             Toast.makeText(MainActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -212,7 +211,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        //  generator.StartThread();
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
@@ -427,7 +425,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void retrieveJson(String query, String country, String apiKey, String category) {
-        //swipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout.setRefreshing(true);
         Call<Headlines> call;
 
         if (!category.equals("")) {
@@ -442,7 +440,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Headlines> call, Response<Headlines> response) {
                 if (response.isSuccessful() && response.body().getArticles() != null) {
-                    // swipeRefreshLayout.setRefreshing(false);
+                     swipeRefreshLayout.setRefreshing(false);
                     articles.clear();
                     articles = response.body().getArticles();
                     adapter = new Adapter(MainActivity.this, articles);
@@ -452,7 +450,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Headlines> call, Throwable t) {
-                // swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setRefreshing(false);
                 Toast.makeText(MainActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });

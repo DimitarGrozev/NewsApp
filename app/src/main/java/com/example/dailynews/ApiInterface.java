@@ -23,14 +23,6 @@ public interface ApiInterface {
             @Query("category") String category,
             @Query("apiKey") String apiKey
     );
-    @GET("top-headlines")
-    Call<Headlines> getNot(
-            @Query("q") String query,
-            @Query("country") String country,
-            @Query("category") String category,
-            @Query("apiKey") String apiKey
-
-    );
 
     @GET("top-headlines")
     Call<Headlines> getSpecificData(
