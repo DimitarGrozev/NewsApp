@@ -11,11 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DailyNews"
         android:usesCleartextTraffic="true"
+        android:launchMode="singleTask"
         >
 
 
-        <activity android:name=".SplashScreen"
-            android:launchMode="singleTask">
+        <activity android:name=".SplashScreen">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

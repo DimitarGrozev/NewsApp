@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         alarmHandler.cancelAlarmManager();
         alarmHandler.setAlarmManager();
 
-       // swipeRefreshLayout = findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout = findViewById(R.id.swipeRefresh);
         recyclerView = findViewById(R.id.recyclerView);
 
         txtHeader = (TextView) findViewById(R.id.txtHeader);
