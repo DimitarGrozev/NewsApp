@@ -21,10 +21,10 @@ public class AlarmHandler {
             noti.setRepeating(AlarmManager.RTC_WAKEUP, TriggerAfter, TriggerEvery, sender);
         }
     }
-    public void cancelAlarmManager(){
+    /*public void cancelAlarmManager(){
         Intent intent = new Intent(context, ExecutableService.class);
         PendingIntent sender =PendingIntent.getBroadcast(context , 2,intent,0);
         AlarmManager noti = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         noti.cancel(sender);
-    }
+    }*/
 }

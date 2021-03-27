@@ -10,9 +10,12 @@
         android:roundIcon="@drawable/circle_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.DailyNews"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        >
 
-        <activity android:name=".SplashScreen">
+
+        <activity android:name=".SplashScreen"
+            android:launchMode="singleTask">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

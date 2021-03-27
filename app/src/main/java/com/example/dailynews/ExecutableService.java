@@ -18,8 +18,6 @@ import java.util.Random;
 public class ExecutableService extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "Amount can not be grater than invoice", Toast.LENGTH_SHORT).show();
-
 
         Random random = new Random();
         int number = random.nextInt(6);
@@ -169,7 +167,7 @@ public class ExecutableService extends BroadcastReceiver {
                 .setSmallIcon(R.drawable.circle_logo)
                 .setContentTitle(message)
                 .setContentText(textContent)
-                //   .setLargeIcon(BitmapFactory.decodeResource(MainActivity.getApplicationContext().getResources(), R.drawable.circle_logo))
+                .setLargeIcon(BitmapFactory.decodeResource(context.getApplicationContext().getResources(), R.drawable.logo))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
@@ -177,5 +175,6 @@ public class ExecutableService extends BroadcastReceiver {
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
         managerCompat.cancelAll();
         managerCompat.notify(1, builder.build());
+
     }
 }
