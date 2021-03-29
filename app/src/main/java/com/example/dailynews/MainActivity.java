@@ -201,10 +201,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!etQuery.getText().toString().equals("")) {
-
+                    swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                        @Override
+                        public void onRefresh() {
+                            retrieveJson(etQuery.getText().toString(),countryList.get(selectedCountry), API_KEY,"");
+                        }
+                    });
                     retrieveJson(etQuery.getText().toString(), countryList.get(selectedCountry), API_KEY, "");
                 } else {
-
+                    swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                        @Override
+                        public void onRefresh() {
+                            retrieveJson("", countryList.get(selectedCountry), API_KEY,"");
+                        }
+                    });
                     retrieveJson("", countryList.get(selectedCountry), API_KEY, "");
                 }
             }
