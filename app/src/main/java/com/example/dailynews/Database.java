@@ -47,7 +47,7 @@ public class Database extends SQLiteOpenHelper {
 
 
     public Boolean AddWord(String word) {
-        if(!this.WordExists(word)) {
+        if(!this.WordExists(word) && !word.equals("")) {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put(KEY_NAME, word); // Име на Потребител

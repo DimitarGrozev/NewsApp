@@ -171,12 +171,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String language = languageSpinner.getItemAtPosition(0).toString();
+                String language = languageSpinner.getSelectedItem().toString();
 
                 if(!language.equals("BG")) {
                     Call<List<Suggestion>> call;
 
-                    if (s.toString() != "") {
+                    if (!s.toString().equals("")) {
                         call = AutocompleteClient.getInstance().getApi().getSuggestions(s.toString());
 
                         call.enqueue(new Callback<List<Suggestion>>() {
@@ -222,7 +222,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                     retrieveJson(etQuery.getText().toString(), countryList.get(selectedCountry), API_KEY, "");
-                    db.AddWord(etQuery.getText().toString());
                 } else {
                     swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                         @Override
@@ -470,6 +469,10 @@ public class MainActivity extends AppCompatActivity {
                     articles = response.body().getArticles();
                     adapter = new Adapter(MainActivity.this, articles);
                     recyclerView.setAdapter(adapter);
+
+                    if(country.equals("bg") && articles.size() > 0) {
+                        db.AddWord(etQuery.getText().toString());
+                    }
                 }
             }
 
