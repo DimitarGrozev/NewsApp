@@ -10,7 +10,10 @@
         android:roundIcon="@drawable/circle_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.DailyNews"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:launchMode="singleTask"
+        >
+
 
         <activity android:name=".SplashScreen">
 
@@ -23,6 +26,8 @@
         <activity android:name=".Detailed"></activity>
         <activity android:name=".MainActivity">
         </activity>
+        <receiver android:name=".ExecutableService"
+            android:enabled="true"/>
     </application>
 
 </manifest>
