@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnSearch, btnBusiness, btnSport, btnEntertainment, btnScience, btnTechnology, btnHealth;
     Dialog dialog;
     String chosenNotif;
+    Spinner languageSpinner;
     final String API_KEY = "d4129a8e2dbe442ebe99d2fc7a24ce86";
     Adapter adapter;
     public static boolean start = true;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     List<Articles> articles = new ArrayList<>();
     static int selectedCountry = 0;
     ArrayList<String> countryList = new ArrayList<String>();
+    final Database db = new Database(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         editText.setAdapter(adapter);
         editText.setThreshold(1);
 
-        Spinner languageSpinner = (Spinner) findViewById(R.id.spinnerLanguage);
+        languageSpinner = (Spinner) findViewById(R.id.spinnerLanguage);
         ArrayAdapter<String> languageAdapter = new ArrayAdapter<String>(MainActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.languages));
         languageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -169,30 +171,42 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Call<List<Suggestion>> call;
+                String language = languageSpinner.getSelectedItem().toString();
 
-                if (s.toString() != "") {
-                    call = AutocompleteClient.getInstance().getApi().getSuggestions(s.toString());
+                if(!language.equals("BG")) {
+                    Call<List<Suggestion>> call;
 
-                    call.enqueue(new Callback<List<Suggestion>>() {
-                        @Override
-                        public void onResponse(Call<List<Suggestion>> call, Response<List<Suggestion>> response) {
-                            if (response.isSuccessful() && response.body() != null) {
-                                List<Suggestion> results = response.body();
-                                Suggestions = GetSuggestions(results).toArray(new String[0]);
+                    if (!s.toString().equals("")) {
+                        call = AutocompleteClient.getInstance().getApi().getSuggestions(s.toString());
 
-                                adapter.clear();
-                                adapter.addAll(Suggestions);
-                                adapter.notifyDataSetChanged();
+                        call.enqueue(new Callback<List<Suggestion>>() {
+                            @Override
+                            public void onResponse(Call<List<Suggestion>> call, Response<List<Suggestion>> response) {
+                                if (response.isSuccessful() && response.body() != null) {
+                                    List<Suggestion> results = response.body();
+                                    Suggestions = GetSuggestions(results).toArray(new String[0]);
+
+                                    adapter.clear();
+                                    adapter.addAll(Suggestions);
+                                    adapter.notifyDataSetChanged();
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<List<Suggestion>> call, Throwable t) {
-                             swipeRefreshLayout.setRefreshing(false);
-                            Toast.makeText(MainActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                            @Override
+                            public void onFailure(Call<List<Suggestion>> call, Throwable t) {
+                                swipeRefreshLayout.setRefreshing(false);
+                                Toast.makeText(MainActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+                else{
+                    List<String> matchingWords = db.GetMatchingWords(s.toString());
+                    Suggestions = matchingWords.toArray(new String[0]);
+
+                    adapter.clear();
+                    adapter.addAll(Suggestions);
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
@@ -455,6 +469,10 @@ public class MainActivity extends AppCompatActivity {
                     articles = response.body().getArticles();
                     adapter = new Adapter(MainActivity.this, articles);
                     recyclerView.setAdapter(adapter);
+
+                    if(country.equals("bg") && articles.size() > 0) {
+                        db.AddWord(etQuery.getText().toString());
+                    }
                 }
             }
 
