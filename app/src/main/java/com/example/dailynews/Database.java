@@ -15,11 +15,13 @@ import java.util.List;
 
 public class Database extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "DailyNews";
     private static final String TABLE_CONTACTS = "WORDS";
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "Word";
+    private static final String TABLE_NOTIFICATION = "Notification";
+    private static final String KEY_NOTIFIED = "isBeingNotified";
 
 
     public Database(Context context) {
@@ -36,15 +38,39 @@ public class Database extends SQLiteOpenHelper {
                 + KEY_NAME + " TEXT"
                 + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
+
+        String CREATE_NOTIFICATION_TABLE = "CREATE TABLE " + TABLE_NOTIFICATION +
+                "("
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + KEY_NOTIFIED + " TEXT" + ")";
+        db.execSQL(CREATE_NOTIFICATION_TABLE);
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTIFICATION);
         onCreate(db);
 
     }
+    public void CreateInitialStatus(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, 123);
+        values.put(KEY_NOTIFIED, "true");
+        db.insert(TABLE_NOTIFICATION, null, values);
+        db.close();
+    }
 
+    public void ChangeNotificationStatus(Boolean isChecked){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_NOTIFIED, isChecked.toString());
+        db.update(TABLE_NOTIFICATION, cv, KEY_ID + "=?",new String[]{"123"});
+        db.close();
+
+    }
 
     public Boolean AddWord(String word) {
         if(!this.WordExists(word) && !word.equals("")) {
@@ -87,5 +113,18 @@ public class Database extends SQLiteOpenHelper {
         }
 
         return wordsList;
+    }
+
+    public Boolean NotificationStatus(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.query(TABLE_NOTIFICATION, new String[]{KEY_NOTIFIED}, null, null, null, null, null);
+        if(cursor.moveToFirst()){
+            String status = cursor.getString(0);
+            if(status.equals("true")){
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 }
