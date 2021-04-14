@@ -19,6 +19,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     TextView txtHeader;
     EditText etQuery;
-    Button btnSearch, btnBusiness, btnSport, btnEntertainment, btnScience, btnTechnology, btnHealth;
+    Button btnSearch, btnBusiness, btnSport, btnEntertainment, btnScience, btnTechnology, btnHealth, moreOptions;
     Dialog dialog;
     String chosenNotif;
     Spinner languageSpinner;
@@ -69,8 +71,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         AlarmHandler alarmHandler = new AlarmHandler(this);
-        alarmHandler.cancelAlarmManager();
-        alarmHandler.setAlarmManager();
+        if(db.NotificationStatus()) {
+            alarmHandler.cancelAlarmManager();
+            alarmHandler.setAlarmManager();
+        }
+        else{
+            alarmHandler.cancelAlarmManager();
+        }
 
         swipeRefreshLayout = findViewById(R.id.swipeRefresh);
         recyclerView = findViewById(R.id.recyclerView);
@@ -84,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         btnTechnology = findViewById(R.id.btnTechnology);
         btnEntertainment = findViewById(R.id.btnEntertainment);
         btnScience = findViewById(R.id.btnScience);
+        moreOptions = findViewById(R.id.moreOptions);
         dialog = new Dialog(MainActivity.this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -231,6 +239,14 @@ public class MainActivity extends AppCompatActivity {
                     });
                     retrieveJson("", countryList.get(selectedCountry), API_KEY, "");
                 }
+            }
+        });
+
+        moreOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, activity_settings.class);
+                    MainActivity.this.startActivity(intent);
             }
         });
 
