@@ -246,6 +246,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                     Intent intent = new Intent(MainActivity.this, activity_settings.class);
+                    intent.putExtra("country", countryList.get(selectedCountry));
                     MainActivity.this.startActivity(intent);
             }
         });
