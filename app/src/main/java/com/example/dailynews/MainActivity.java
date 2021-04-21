@@ -242,6 +242,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        txtHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                retrieveJson("", countryList.get(selectedCountry), API_KEY, "");
+            }
+        });
+
         moreOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
