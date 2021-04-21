@@ -245,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
         txtHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                etQuery.setText("");
                 retrieveJson("", countryList.get(selectedCountry), API_KEY, "");
             }
         });
