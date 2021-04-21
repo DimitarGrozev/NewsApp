@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 import android.widget.Toast;
 
@@ -164,7 +165,8 @@ public class ExecutableService extends BroadcastReceiver {
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "My Notification")
-                .setSmallIcon(R.drawable.circle_logo)
+                .setSmallIcon(R.drawable.outline_remove_circle_black_24dp)
+                .setColor(Color.BLACK)
                 .setContentTitle(message)
                 .setContentText(textContent)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getApplicationContext().getResources(), R.drawable.logo))
