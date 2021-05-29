@@ -164,7 +164,7 @@ public class ExecutableService extends BroadcastReceiver {
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "My Notification")
-                .setSmallIcon(R.drawable.circle_logo)
+                .setSmallIcon(R.drawable.outline_remove_circle_black_24dp)
                 .setContentTitle(message)
                 .setContentText(textContent)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getApplicationContext().getResources(), R.drawable.logo))
