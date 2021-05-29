@@ -504,7 +504,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Headlines> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
-                Toast.makeText(MainActivity.this, "Could not connect to the API. Please try again later!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
