@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                etQuery.setText("");
                retrieveJson("", countryList.get(selectedCountry), API_KEY,"");
             }
         });
